@@ -1,10 +1,12 @@
-const product = require('../models/product');
 const Product = require('../models/product');
 
 
 exports.createProduct = (req, res, next) => {
     const product = new Product ({
-        ...req.body
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        inStock: req.body.inStock,
     })
     product.save()
     .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
@@ -13,7 +15,6 @@ exports.createProduct = (req, res, next) => {
 
 exports.updateProduct = (req, res, next) => {
     Product.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
-    Product.save()
     .then(() => res.status(201).json({ message: 'Objet modifié !'}))
     .catch(error => res.status(400).json({ error }))
 }
@@ -26,14 +27,12 @@ exports.deleteProduct = (req, res, next) => {
 
 exports.getOneProduct = (req, res, next) => {
     Product.findOne({_id: req.params.id})
-    product.save()
     .then((product) => res.status(201).json({ product }))
     .catch(error => res.status(400).json({ error }));
 }
 
 exports.getAllProduct = (req, res, next) => {
     Product.find()
-    product.save()
     .then((products) => res.status(201).json({products}))
     .catch(error => res.status(400).json({ error }));
 }

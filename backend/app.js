@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const productRoutes = require('./routes/product');
-
+require('dotenv').config();
 
 mongoose.connect(`${process.env.DB_LOGIN_ACCOUNT}`,
 { useNewUrlParser: true,
@@ -10,7 +10,6 @@ mongoose.connect(`${process.env.DB_LOGIN_ACCOUNT}`,
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-require('dotenv').config();
 
 app.use(express.json());
 app.use('/api/products', productRoutes);
